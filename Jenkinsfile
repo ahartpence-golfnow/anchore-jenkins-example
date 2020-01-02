@@ -5,7 +5,7 @@ def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUM
 
 pipeline {
   agent {
-    any {
+    build-cloud {
       label 'sample-app'
       defaultContainer 'jnlp'
       yaml """
