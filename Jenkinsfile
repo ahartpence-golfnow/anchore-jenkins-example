@@ -5,7 +5,7 @@ def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUM
 
 pipeline {
   agent {
-    kubernetes {
+    any {
       label 'sample-app'
       defaultContainer 'jnlp'
       yaml """
@@ -43,7 +43,15 @@ spec:
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t ${imageTag} ."
         }
       }
-    }    
+    }
+    
+    stage('testttt') {
+      steps {
+        container('gcloud') {
+          sh "PYTHONUNBUFFERED=1 gcloud builds submit -t ${imageTag} ."
+        }
+      }
+    }  
   }
 }
 
