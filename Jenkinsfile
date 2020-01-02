@@ -4,18 +4,15 @@ def  feSvcName = "${appName}-frontend"
 def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline {
-  environment {
-    registry = "hartpence-test"
-    registryCredential = 'hartpence-docker-test'
-  }
   
   agent {any {}}
+  
   stages {
     stage('Building image') {
       steps{
         container('docker'){
-        script {
-          app = docker.build("kenna-experimental-datacenter/hartpence-test")
+          script {
+            app = docker.build("kenna-experimental-datacenter/hartpence-test")
         }
       }    
     }
@@ -25,8 +22,8 @@ pipeline {
       steps {
         container('docker') {
           script {
-            docker.withRegistry('https://gcr.io', 'gcr:kenna-experimental-datacenter') {
-             app.push("${env.BUILD_NUMBER}")
+            docker.withRegistry('https://gcr.io', 'kenna-experimental-datacenter') {
+              app.push("${env.BUILD_NUMBER}")
               app.push("latest")
             }
           }
