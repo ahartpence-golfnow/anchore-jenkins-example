@@ -1,5 +1,5 @@
-def project = 'REPLACE_WITH_YOUR_PROJECT_ID'
-def  appName = 'gceme'
+def project = 'kenna-experimental-datacenter'
+def  appName = 'hartpence-test'
 def  feSvcName = "${appName}-frontend"
 def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
@@ -49,13 +49,8 @@ spec:
         app.inside {
             sh 'echo "Dummy - tests passed"'
         }
-      },
-      Analyze: {
-        writeFile file: anchorefile, text: inputConfig['dockerRegistryHostname'] + "/" + repotag + " " + dockerfile
-        anchore name: anchorefile, engineurl: inputConfig['anchoreEngineUrl'], engineCredentialsId: inputConfig['anchoreEngineCredentials'], annotations: [[key: 'added-by', value: 'jenkins']]
       }
     }
-  }
 }
 
 
