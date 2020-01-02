@@ -1,40 +1,11 @@
-def project = 'kenna-experimental-datacenter'
-def  appName = 'hartpence-test'
-def  feSvcName = "${appName}-frontend"
-def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
-
-pipeline {
-  environment {
-    registry = "hartpence-test"
-    registryCredential = 'hartpence-docker-test'
-  }
+teeleaderStandard  {
   
-  agent {any {}}
-  stages {
-    stage('Building image') {
-      steps{
-        container('docker'){
-        script {
-          app = docker.build("kenna-experimental-datacenter/hartpence-test")
-        }
-      }    
-    }
-  }
-    
-    stage('push to gcr') {
-      steps {
-        container('docker') {
-          script {
-            docker.withRegistry('https://gcr.io', 'gcr:kenna-experimental-datacenter') {
-             app.push("${env.BUILD_NUMBER}")
-              app.push("latest")
-            }
-          }
-        }
-      }
-    }  
-  }
+    docker = [
+        keyFileId: 'gcr-kenna-experimental',
+        repository: 'gcr.io/kenna-experimental-datacenter/hartpence-test',
+        filePath: 'Dockerfile',
+        buildArgs: [:],
+        tag: '1.1.2.@BUILD_NUMBER@.@BRANCH_NAME@'
+    ]
+  
 }
-
-
-
