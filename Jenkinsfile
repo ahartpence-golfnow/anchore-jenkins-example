@@ -11,13 +11,13 @@ pipeline {
   
   agent {any {}}
   stages {
-    stage('Build and push image with Container Builder') {
-      steps {
-        container('docker') {
-          docker.build registry + ":$BUILD_NUMBER"
-        }
+    stage('Building image') {
+    steps{
+      script {
+        docker.build registry + ":$BUILD_NUMBER"
       }
     }
+  }
     
     stage('testttt') {
       steps {
