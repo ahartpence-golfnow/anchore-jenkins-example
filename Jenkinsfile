@@ -15,7 +15,7 @@ pipeline {
       steps{
         container('docker'){
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          app = docker.build("kenna-experimental-datacenter/hartpence-test")
         }
       }    
     }
@@ -24,10 +24,9 @@ pipeline {
     stage('push to gcr') {
       steps {
         container('docker') {
-          script {
-            docker.withRegistry( 'gcr.io/kenna-experimental-datacenter/hartpence-test', registryCredential ) {
-            dockerImage.push()
-            }
+          docker.withRegistry('https://gcr.io', 'kenna-experimental-datacenter') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
           }
         }
       }
