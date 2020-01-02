@@ -28,8 +28,8 @@ spec:
     - cat
     tty: true
 """
-
-
+}
+  }
 
 stage('Configure') {
     abort = false
