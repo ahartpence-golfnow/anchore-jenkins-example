@@ -1,5 +1,5 @@
 teeleaderStandard  {
-  
+    buildCloudId = 'build-cloud'
     docker = [
         keyFileId: 'gcr-kenna-experimental',
         repository: 'gcr.io/kenna-experimental-datacenter/hartpence-test',
