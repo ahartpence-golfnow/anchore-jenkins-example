@@ -37,25 +37,13 @@ spec:
 }
   }
   stages {
-    stage('Test') {
-      steps {
-        container('golang') {
-          sh """
-            ln -s `pwd` /go/src/sample-app
-            cd /go/src/sample-app
-            go test
-          """
-        }
-      }
-    }
     stage('Build and push image with Container Builder') {
       steps {
         container('gcloud') {
           sh "PYTHONUNBUFFERED=1 gcloud builds submit -t ${imageTag} ."
         }
       }
-    }
-    
+    }    
     stage('Parallel') {
       parallel Test: {
         app.inside {
