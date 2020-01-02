@@ -1,3 +1,36 @@
+  agent {
+    kubernetes {
+      label 'sample-app'
+      defaultContainer 'jnlp'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+labels:
+  component: ci
+spec:
+  # Use service account that can deploy to all namespaces
+  serviceAccountName: cd-jenkins
+  containers:
+  - name: golang
+    image: golang:1.10
+    command:
+    - cat
+    tty: true
+  - name: gcloud
+    image: gcr.io/cloud-builders/gcloud
+    command:
+    - cat
+    tty: true
+  - name: kubectl
+    image: gcr.io/cloud-builders/kubectl
+    command:
+    - cat
+    tty: true
+"""
+
+
+
 stage('Configure') {
     abort = false
     inputConfig = input id: 'InputConfig', message: 'Docker registry and Anchore Engine configuration', parameters: [string(defaultValue: 'https://index.docker.io/v1/', description: 'URL of the docker registry for staging images before analysis', name: 'dockerRegistryUrl', trim: true), string(defaultValue: 'docker.io', description: 'Hostname of the docker registry', name: 'dockerRegistryHostname', trim: true), string(defaultValue: '', description: 'Name of the docker repository', name: 'dockerRepository', trim: true), credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: '', description: 'Credentials for connecting to the docker registry', name: 'dockerCredentials', required: true), string(defaultValue: '', description: 'Anchore Engine API endpoint', name: 'anchoreEngineUrl', trim: true), credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: '', description: 'Credentials for interacting with Anchore Engine', name: 'anchoreEngineCredentials', required: true)]
@@ -31,16 +64,15 @@ node {
       anchorefile = path + "/anchore_images"
     }
 
-    stage('Build') {
-      // Build the image and push it to a staging repository
-      repotag = inputConfig['dockerRepository'] + ":${BUILD_NUMBER}"
-      docker.withRegistry(inputConfig['dockerRegistryUrl'], inputConfig['dockerCredentials']) {
-        app = docker.build(repotag)
-        app.push()
+    stage('Build and push image with Container Builder') {
+      steps {
+        container('gcloud') {
+          sh "PYTHONUNBUFFERED=1 gcloud builds submit -t ${imageTag} ."
+        }
       }
     }
-
-    stage('Parallel') {
+ 
+      stage('Parallel') {
       parallel Test: {
         app.inside {
             sh 'echo "Dummy - tests passed"'
