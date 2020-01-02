@@ -5,7 +5,7 @@ def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUM
 
 pipeline {
   environment {
-    registry = "ahartpence/test"
+    registry = "hartpence-test"
     registryCredential = 'hartpence-docker-test'
   }
   
@@ -14,17 +14,21 @@ pipeline {
     stage('Building image') {
       steps{
         container('docker'){
-         script {
-          docker.build registry + ":$BUILD_NUMBER"
-      }
-     }    
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }    
     }
   }
     
-    stage('testttt') {
+    stage('push to gcr') {
       steps {
         container('docker') {
-          sh "PYTHONUNBUFFERED=1 gcloud builds submit -t ${imageTag} ."
+          script {
+            docker.withRegistry( 'gcr.io/kenna-experimental-datacenter/hartpence-test', registryCredential ) {
+            dockerImage.push()
+            }
+          }
         }
       }
     }  
