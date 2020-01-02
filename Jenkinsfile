@@ -24,9 +24,11 @@ pipeline {
     stage('push to gcr') {
       steps {
         container('docker') {
-          docker.withRegistry('https://gcr.io', 'kenna-experimental-datacenter') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+          script {
+            docker.withRegistry('https://gcr.io', 'kenna-experimental-datacenter') {
+             app.push("${env.BUILD_NUMBER}")
+              app.push("latest")
+            }
           }
         }
       }
