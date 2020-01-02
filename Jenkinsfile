@@ -9,7 +9,7 @@ pipeline {
     stage('Build and push image with Container Builder') {
       steps {
         container('docker') {
-          sh "PYTHONUNBUFFERED=1 gcloud builds submit -t ${imageTag} ."
+          sh "docker build ."
         }
       }
     }
