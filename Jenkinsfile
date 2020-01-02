@@ -44,13 +44,6 @@ spec:
         }
       }
     }    
-    stage('test') {
-      parallel Test: {
-        app.inside {
-            sh 'echo "Dummy - tests passed"'
-        }
-      }
-    }
   }
 }
 
