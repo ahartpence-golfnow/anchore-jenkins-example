@@ -4,12 +4,17 @@ def  feSvcName = "${appName}-frontend"
 def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline {
+  environment {
+    registry = "ahartpence/test"
+    registryCredential = 'hartpence-docker-test'
+  }
+  
   agent {any {}}
   stages {
     stage('Build and push image with Container Builder') {
       steps {
         container('docker') {
-          sh "docker build ."
+          docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
