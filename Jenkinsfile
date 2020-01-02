@@ -1,3 +1,4 @@
+pipeline {
   agent {
     kubernetes {
       label 'sample-app'
@@ -89,4 +90,5 @@ node {
       sh script: "docker rmi " + repotag
     }
   }
+}
 }
