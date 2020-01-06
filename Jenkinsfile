@@ -24,7 +24,6 @@ pipeline {
           script {
             docker.withRegistry("https://gcr.io", "gcr-kenna-experimental"{
               app.push()
-            }
           }
         }
       }
