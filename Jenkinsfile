@@ -18,7 +18,7 @@ pipeline {
         container('docker') {
           script {
             docker.withRegistry("https://gcr.io", "gcr:gcr-kenna-experimental"){
-              app.push("${env.BUILD_NUMBER}")
+              app.push("1.1.2.${env.BUILD_NUMBER}")
               app.push("latest")
             }
           }
