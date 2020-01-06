@@ -28,11 +28,7 @@ pipeline {
     
     stage('analyze with anchore'){
       steps {
-        script {
-          sh 'echo "current build number: ${currentBuild.number}"'
-          sh 'cat anchore_images'
-          //anchore name: 'anchore_images'
-        }
+        echo "current build number: ${currentBuild.number}"
       }
     }
   }
