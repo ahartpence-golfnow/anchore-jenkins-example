@@ -31,7 +31,7 @@ pipeline {
         script {
           echo "`pwd`/Dockerfile" > anchore_images
           echo anchore_images
-          anchore name: 'anchore_images'
+          //anchore name: 'anchore_images'
         }
       }
     }
