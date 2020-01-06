@@ -1,8 +1,3 @@
-def project = 'kenna-experimental-datacenter'
-def  appName = 'hartpence-test'
-def  feSvcName = "${appName}-frontend"
-def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
-
 pipeline {
   
   agent {any {}}
@@ -28,6 +23,14 @@ pipeline {
           }
         }
       }
-    }  
+    }
+    
+    stage('run anchore image secret scan' {
+      steps {
+        container('') {
+          
+        }
+      }
+    }
   }
 }
