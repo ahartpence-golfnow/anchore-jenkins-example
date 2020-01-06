@@ -29,9 +29,9 @@ pipeline {
     stage('analyze with anchore'){
       steps {
         script {
-          sh 'echo "`pwd`/Dockerfile" > anchore_images'
+          sh 'echo "gcr.io/kenna-experimental-datacenter/hartpence-test:latest" > anchore_images'
           sh 'cat anchore_images'
-          //anchore name: 'anchore_images'
+          anchore name: 'anchore_images'
         }
       }
     }
