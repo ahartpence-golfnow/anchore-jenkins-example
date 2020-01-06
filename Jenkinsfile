@@ -22,10 +22,12 @@ pipeline {
       steps {
         container('docker') {
           script {
-            docker.withRegistry("https://gcr.io", 'kenna-experimental-datacenter') {
-              app.push("${env.BUILD_NUMBER}")
-              app.push("latest")
-            }
+              withCredentials([string(credentialsId: 'kenna-experimental-datacenter', variable: 'docker-creds')]) {
+                 sh /* WRONG! */ """
+                  set +x
+                  echo $docker-creds |  docker login -u _json_key --password-stdin https://gcr.io
+                """
+             }
           }
         }
       }
