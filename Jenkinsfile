@@ -29,7 +29,7 @@ pipeline {
     stage('analyze with anchore'){
       steps {
         script {
-          echo "1.1.1.2${env.BUILD_NUMBER} ${WORKSPACE}/Dockerfile > ${WORKSPACE}/anchore_images"
+          echo "docker.io/exampleuser/examplerepo:latest `pwd`/Dockerfile" > anchore_images
           anchore name: 'anchore_images'
         }
       }
