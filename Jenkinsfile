@@ -28,9 +28,9 @@ pipeline {
     
     stage('analyze with anchore'){
       steps {
-        sh ' echo "gcr.io/kenna-experimental-datacenter/hartpence-test:${currentBuild.number} > anchore_images"'
+        echo "gcr.io/kenna-experimental-datacenter/hartpence-test:${currentBuild.number} > anchore_images"
         sh 'cat anchore_images'
-        anchore name: 'anchore_images'
+        anchore name: 'anchire_images'
       }
     }
   }
