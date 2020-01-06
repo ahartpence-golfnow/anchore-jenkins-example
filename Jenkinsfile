@@ -27,9 +27,16 @@ pipeline {
     }
     
     stage('analyize with anchore'){
-      steps{
-          writeFile file: anchorefile, text: inputConfig['dockerRegistryHostname'] + "/" + repotag + " " + dockerfile
-          anchore name: anchorefile, engineurl: inputConfig['anchoreEngineUrl'], engineCredentialsId: inputConfig['anchoreEngineCredentials'], annotations: [[key: 'added-by', value: 'jenkins']]
+      steps {
+        parallel(
+          prep-for-anchore: {
+            echo "1.1.1.2${env.BUILD_NUMBER} ${workspace}/Dockerfile > anchore_images"
+          },
+          analyze: {
+            anchore name: 'anchore_images'
+          }
+
+        )
       }
     }
   }
