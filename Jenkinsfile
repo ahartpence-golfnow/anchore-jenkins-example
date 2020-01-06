@@ -30,7 +30,7 @@ pipeline {
       steps {
         parallel(
           prepare: {
-            echo "1.1.1.2${env.BUILD_NUMBER} ${workspace}/Dockerfile > anchore_images"
+            echo "1.1.1.2${env.BUILD_NUMBER} ${WORKSPACE}/Dockerfile > anchore_images"
           },
           analyze: {
             anchore name: 'anchore_images'
