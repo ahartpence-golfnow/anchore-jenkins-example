@@ -22,7 +22,7 @@ pipeline {
       steps {
         container('docker') {
           script {
-            docker.withRegistry("https://gcr.io", "gcr-kenna-experimental"{
+            docker.withRegistry("https://gcr.io", "gcr-kenna-experimental"){
               app.push()
           }
         }
