@@ -26,10 +26,10 @@ pipeline {
       }
     }
     
-    stage('analyize with anchore'){
+    stage('analyze with anchore'){
       steps {
         parallel(
-          prep-for-anchore: {
+          prepare: {
             echo "1.1.1.2${env.BUILD_NUMBER} ${workspace}/Dockerfile > anchore_images"
           },
           analyze: {
