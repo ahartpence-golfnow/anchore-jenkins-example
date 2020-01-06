@@ -28,10 +28,8 @@ pipeline {
     
     stage('analyize with anchore'){
       steps{
-        Analyze: {
           writeFile file: anchorefile, text: inputConfig['dockerRegistryHostname'] + "/" + repotag + " " + dockerfile
           anchore name: anchorefile, engineurl: inputConfig['anchoreEngineUrl'], engineCredentialsId: inputConfig['anchoreEngineCredentials'], annotations: [[key: 'added-by', value: 'jenkins']]
-        }
       }
     }
   }
