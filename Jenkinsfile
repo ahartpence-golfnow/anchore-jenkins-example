@@ -22,7 +22,7 @@ pipeline {
       steps {
         container('docker') {
           script {
-              withCredentials([string(credentialsId: 'kenna-experimental-datacenter', variable: 'docker-creds')]) {
+              withCredentials([string(credentialsId: 'gcr-kenna-experimental', variable: 'docker-creds')]) {
                  sh /* WRONG! */ """
                   set +x
                   echo $docker-creds |  docker login -u _json_key --password-stdin https://gcr.io
