@@ -18,17 +18,10 @@ pipeline {
         container('docker') {
           script {
             docker.withRegistry("https://gcr.io", "gcr:gcr-kenna-experimental"){
-              app.push()
+              app.push("${env.BUILD_NUMBER}")
+              app.push("latest")
             }
           }
-        }
-      }
-    }
-    
-    stage('run anchore image secret scan' {
-      steps {
-        container('') {
-          
         }
       }
     }
