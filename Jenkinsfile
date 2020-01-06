@@ -28,8 +28,10 @@ pipeline {
     
     stage('analyze with anchore'){
       steps {
-        echo "gcr.io/kenna-experimental-datacenter/hartpence-test:${currentBuild.number} > `pwd`/anchore_images"
-        anchore name: 'anchore_images'
+        script {
+          echo "gcr.io/kenna-experimental-datacenter/hartpence-test:${currentBuild.number} > `pwd`/anchore_images"
+          anchore name: 'anchore_images'
+        }
       }
     }
   }
