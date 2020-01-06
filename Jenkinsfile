@@ -30,7 +30,7 @@ pipeline {
       steps {
         script {
           sh 'echo "`pwd`/Dockerfile" > anchore_images'
-          sh 'echo anchore_images'
+          sh 'cat anchore_images'
           //anchore name: 'anchore_images'
         }
       }
