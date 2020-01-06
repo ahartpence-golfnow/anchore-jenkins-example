@@ -29,7 +29,8 @@ pipeline {
     stage('analyze with anchore'){
       steps {
         script {
-          echo "docker.io/exampleuser/examplerepo:latest `pwd`/Dockerfile" > anchore_images
+          echo "`pwd`/Dockerfile" > anchore_images
+          echo anchore_images
           anchore name: 'anchore_images'
         }
       }
