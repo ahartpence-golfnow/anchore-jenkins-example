@@ -28,8 +28,8 @@ pipeline {
     
     stage('analyze with anchore'){
       steps {
-        echo "gcr.io/kenna-experimental-datacenter/hartpence-test:${currentBuild.number} > anchore_images"
-        cat anchore_images
+        sh ' echo "gcr.io/kenna-experimental-datacenter/hartpence-test:${currentBuild.number} > anchore_images"'
+        sh 'cat anchore_images'
         anchore name: 'anchore_images'
       }
     }
