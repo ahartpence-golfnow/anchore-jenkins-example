@@ -1,4 +1,4 @@
-teeleaderStandard {
+hartpenceTest {
     buildCloudId = 'build-cloud'
     jenkins = [
         approversId: 'authorization-approver-list-teeleader'
