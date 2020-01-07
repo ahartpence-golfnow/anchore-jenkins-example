@@ -1,4 +1,4 @@
-hartpenceTest {
+teeleaderStandard {
     buildCloudId = 'build-cloud'
     jenkins = [
         approversId: 'authorization-approver-list-teeleader'
@@ -13,8 +13,8 @@ hartpenceTest {
         applicationId: '79096478'
     ]
     docker = [
-        keyFileId: 'gcr-golfnow',
-        repository: 'gcr.io/kenna-experimental-datacenter/hartpence-test',
+        keyFileId: 'gcr-kenna-experimental',
+        repository: 'gcr.io/kenna-1201/phx-ui-be',
         filePath: 'Dockerfile',
         buildArgs: [:],
         tag: '1.1.2.@BUILD_NUMBER@.@BRANCH_NAME@'
