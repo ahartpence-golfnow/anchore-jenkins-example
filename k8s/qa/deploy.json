@@ -1,0 +1,69 @@
+{
+	"apiVersion": "extensions/v1beta1",
+	"kind": "Deployment",
+	"metadata": {
+		"labels": {
+			"app": "hartpence-anchore-test",
+			"name": "hartpence-anchore-test",
+			"type": "internal"
+		},
+		"name": "hartpence-anchore-test",
+		"namespace": "@{namespace}"
+	},
+	"spec": {
+		"replicas": "@{replicas}",
+		"selector": {
+			"matchLabels": {
+				"app": "hartpence-anchore-test",
+				"name": "hartpence-anchore-test",
+				"type": "internal"
+			}
+		},
+		"strategy": {
+			"rollingUpdate": {
+				"maxSurge": 1,
+				"maxUnavailable": 1
+			},
+			"type": "RollingUpdate"
+		},
+		"template": {
+			"metadata": {
+				"labels": {
+					"app": "hartpence-anchore-test",
+					"name": "hartpence-anchore-test",
+					"type": "internal",
+					"restart": "true"
+				}
+			},
+			"spec": {
+				"containers": [
+					{
+						"command": [
+							"bash",
+							"-c",
+							"npm start"
+						],
+						"image": "@{image}",
+						"imagePullPolicy": "IfNotPresent",
+						"name": "hartpence-anchore-test",
+						"resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "500Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "250Mi"
+                            }
+                        },
+						"terminationMessagePath": "/dev/termination-log"
+					}
+				],
+				"dnsPolicy": "ClusterFirst",
+				"restartPolicy": "Always",
+				"securityContext": {},
+				"terminationGracePeriodSeconds": 30
+			}
+		}
+	}
+}
