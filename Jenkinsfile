@@ -17,7 +17,7 @@ hartpenceTest {
         repository: 'gcr.io/kenna-experimental-datacenter/hartpence-test',
         filePath: 'Dockerfile',
         buildArgs: [:],
-        tag: '1.1.2.@BUILD_NUMBER@.@BRANCH_NAME@'
+        tag: 'latest'
     ]
     tests = [
         [
